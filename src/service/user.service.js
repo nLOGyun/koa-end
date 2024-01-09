@@ -10,11 +10,22 @@ class UserService{
         username && Object.assign(whereOpt, {username})
 
         const res = await User.findOne({
-            attributes: ['id', 'username', 'password', 'createdAt', 'updatedAt'],
+            attributes: ['id', 'username', 'password'],
             where: whereOpt
         })
 
         return res ? res.dataValues : false
+    }
+    async findUser({username}) {
+        const res = await User.findAll({
+            attributes: ['id', 'username'],
+            where: {username}
+        })
+        let rel = []
+        res.forEach(item => {
+            rel.push(item.dataValues)
+        })
+        return rel
     }
 }
 

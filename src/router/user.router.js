@@ -1,5 +1,5 @@
 const Router = require('@koa/router')
-const {userRegister, userLogin, getInfo} = require('../controller/user.controller')
+const {userRegister, userLogin, getInfo, getOne} = require('../controller/user.controller')
 const {verifyLogin} = require("../middleware/user.middleware")
 const {auth} = require('../middleware/auth.middleware')
 
@@ -11,5 +11,6 @@ router.get('/add', (ctx, next) => {
 router.post('/register', userRegister)
 router.post('/login', verifyLogin, userLogin)
 router.get('/getInfo', auth, getInfo)
+router.get('/findOne', getOne)
 
 module.exports = router

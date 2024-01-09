@@ -1,5 +1,5 @@
 const {UserRegisterError} = require('../error/error')
-const {createUser, getUserInfo} = require('../service/user.service')
+const {createUser, getUserInfo, findUser} = require('../service/user.service')
 const jwt = require('jsonwebtoken')
 class UserController {
     async userRegister(ctx, next) {
@@ -39,6 +39,19 @@ class UserController {
         try{
             const {id} = ctx.state.user;
             const res = await getUserInfo({id})
+            ctx.body = {
+                code: 0,
+                message: '查询成功',
+                result: res
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    async getOne(ctx) {
+        try{
+            const {username} = ctx.request.query;
+            const res = await findUser({username})
             ctx.body = {
                 code: 0,
                 message: '查询成功',
